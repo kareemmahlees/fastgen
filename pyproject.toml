@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "fastgen"
+version = "0.1.0"
+description = "FastGen, Start FastAPI Projects In Lightning Speed"
+authors = ["kareem <kareemmahlees@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/kareemmahlees/fastgen"
+keywords =["CLI","python","typer","fastapi","fastgen","project","template"]
+exclude = ["./Dockerfile","./.dockerignore","./.venv"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+rich = "^12.5.1"
+typer = {extras = ["all"], version = "^0.6.1"}
+pre-commit = "^2.20.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.8.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+fastgen = "fastgen.main:app"
+
