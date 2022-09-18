@@ -25,7 +25,7 @@ $ fastgen [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 - `info`
-- `new`
+- `startproject`
 
 ## `fastgen info`
 
@@ -39,7 +39,7 @@ $ fastgen info [OPTIONS]
 
 - `--help`: Show this message and exit.
 
-## `fastgen new`
+## `fastgen startproject`
 
 **Usage**:
 
