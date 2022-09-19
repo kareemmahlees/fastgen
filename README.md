@@ -10,7 +10,7 @@ this is a glanc of the project structure you will have once you use **FastGen**
 
 ![dirs_images](./docs/dir.png)
 
-## **Installation**
+## ✨ **Installation**
 
 ```console
 $ python -m pip install fastgen
@@ -72,6 +72,6 @@ $ fastgen new [OPTIONS] ⭐ Project Name
 
 feel free to open an issue discussing the problem you faced
 
-## **Contributing**
+## 🤝🏻 **Contributing**
 
 please refer to [Contribution Guide](./CONTRIBUTING.md)
