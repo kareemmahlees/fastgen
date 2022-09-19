@@ -4,3 +4,4 @@ poetry.lock
 Dockerfile
 .dockerignore
 fastgen/test.py
+dist
