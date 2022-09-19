@@ -4,7 +4,13 @@ Start FastAPI Projects in Lightning Speed
 
 Built With **Typer** To Help With <span style="color:green">**FastAPI**</span>.
 
-## Installation
+## 👀 **Take A Look**
+
+this is a glanc of the project structure you will have once you use **FastGen**
+
+![dirs_images](./docs/dir.png)
+
+## **Installation**
 
 ```console
 $ python -m pip install fastgen
@@ -25,7 +31,7 @@ $ fastgen [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 - `info`
-- `startproject`
+- `new`
 
 ## `fastgen info`
 
@@ -39,12 +45,12 @@ $ fastgen info [OPTIONS]
 
 - `--help`: Show this message and exit.
 
-## `fastgen startproject`
+## `fastgen new`
 
 **Usage**:
 
 ```console
-$ fastgen startproject [OPTIONS] ⭐ Project Name
+$ fastgen new [OPTIONS] ⭐ Project Name
 ```
 
 **Arguments**:
@@ -61,3 +67,11 @@ $ fastgen startproject [OPTIONS] ⭐ Project Name
 - `--testing / --no-testing`: [default: False]
 - `--database 📅 Database`: [default: postgresql] ( Options are postgresql,mysql,sqlite )
 - `--help`: Show this message and exit.
+
+## 🪲 **Encountered A Problem !**
+
+feel free to open an issue discussing the problem you faced
+
+## **Contributing**
+
+please refer to [Contribution Guide](./CONTRIBUTING.md)
