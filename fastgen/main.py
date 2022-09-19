@@ -14,7 +14,7 @@ console = Console()
 
 
 @app.command()
-def startproject(
+def new(
     project_name: str = typer.Argument(
         default=...,
         metavar="⭐ Project Name",
