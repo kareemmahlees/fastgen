@@ -13,7 +13,6 @@ exclude = ["./Dockerfile","./.dockerignore","./.venv"]
 python = "^3.7"
 rich = "^12.5.1"
 typer = {extras = ["all"], version = "^0.6.1"}
-pre-commit = "^2.20.0"
 click = "8.1.3"
 
 [tool.poetry.dev-dependencies]

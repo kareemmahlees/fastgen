@@ -30,34 +30,30 @@ def new(
         metavar="📦 Package Manager",
         help="Choices are pip , poetry (comming soon)",
     ),
-    migrations: bool = typer.Option(
-        default=False, metavar="🚀 Alembic Migrations", encoding="utf-8"
-    ),
-    docker: bool = typer.Option(default=False, metavar="🐋 Docker", encoding="utf-8"),
-    testing: bool = typer.Option(default=False, metavar="💉 Tests", encoding="utf-8"),
+    migrations: bool = typer.Option(default=False, metavar="🚀 Alembic Migrations"),
+    docker: bool = typer.Option(default=False, metavar="🐋 Docker"),
+    testing: bool = typer.Option(default=False, metavar="💉 Tests"),
     database: Database = typer.Option(
         default=Database.postgresql.value,
         metavar="📅 Database",
         help="Choices are sqlite3,postgresql,mysql",
     ),
 ):
-
-    match package_manager:
-        case PackageManager.pip:
-            pipmanager = pip_manager.PipManager(
-                project_name=project_name,
-                migrations=migrations,
-                testing=testing,
-                database=database,
-                docker=docker,
-            )
-            if dir is not None:
-                pipmanager.nav_to_dir(dir)
-            pipmanager.create_project()
-            pipmanager.init_env()
-        case PackageManager.poetry:
-            # * Comming Soon
-            ...
+    if package_manager == PackageManager.pip:
+        pipmanager = pip_manager.PipManager(
+            project_name=project_name,
+            migrations=migrations,
+            testing=testing,
+            database=database,
+            docker=docker,
+        )
+        if dir is not None:
+            pipmanager.nav_to_dir(dir)
+        pipmanager.create_project()
+        pipmanager.init_env()
+    elif package_manager == PackageManager.poetry:
+        # * Comming Soon
+        ...
 
 
 @app.command()
