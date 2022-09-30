@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "fastgen"
-version = "0.1.3"
+version = "0.2.3"
 description = "FastGen, Start FastAPI Projects In Lightning Speed"
 authors = ["kareem <kareemmahlees@gmail.com>"]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/kareemmahlees/fastgen"
-keywords =["CLI","python","typer","fastapi","fastgen","project","template"]
+keywords =["CLI","python","typer","fastapi","fastgen","project","template","pip","poetry"]
 exclude = ["./Dockerfile","./.dockerignore","./.venv"]
 
 [tool.poetry.dependencies]
