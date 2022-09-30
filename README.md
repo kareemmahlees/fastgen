@@ -55,13 +55,13 @@ $ fastgen new [OPTIONS] ⭐ Project Name
 
 **Arguments**:
 
-- `⭐ Project Name`: [required]
+- `⭐ Project Name`: <span style="color:pink">**required**
 
 **Options**:
 
 - `--dir 📁 Directory Path`
 - `--package-manager 📦 Package Manager`: [default: pip]
-  ( Options are pip , poetry "Comming Soon" )
+  ( Options are pip , poetry )
 - `--migrations / --no-migrations`: [default: False]
 - `--docker / --no-docker`: [default: False]
 - `--testing / --no-testing`: [default: False]
