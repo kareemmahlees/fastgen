@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastgen"
-version = "0.2.3"
+version = "0.2.5"
 description = "FastGen, Start FastAPI Projects In Lightning Speed"
 authors = ["kareem <kareemmahlees@gmail.com>"]
 readme = "README.md"
