@@ -24,12 +24,14 @@ class PipManager(Manager):
         testing: bool,
         database: Database,
         docker: bool,
+        orm: bool,
     ) -> None:
         self.project_name = project_name
         self.migrations = migrations
         self.testing = testing
         self.database = database
         self.docker = docker
+        self.orm = orm
 
     def nav_to_dir(self, dir_name: str) -> None:
         return super().nav_to_dir(dir_name)
@@ -61,7 +63,7 @@ class PipManager(Manager):
         # create database stuff
         database_path = self.project_path / "app" / "database"
         os.makedirs(database_path)
-        self.generate_db_related_files(database_path=database_path)
+        self.generate_db_related_files(database_path=database_path, orm=self.orm)
 
         # create .env file
         self.generate_env_file(project_path=self.project_path)
@@ -100,8 +102,8 @@ class PipManager(Manager):
     def generate_main_files(self, api_path: Path):
         return super().generate_main_files(api_path)
 
-    def generate_db_related_files(self, database_path: Path):
-        return super().generate_db_related_files(database_path)
+    def generate_db_related_files(self, database_path: Path, orm: bool):
+        return super().generate_db_related_files(database_path, orm=orm)
 
     def generate_settings_related_files(self, settings_path: Path):
         return super().generate_settings_related_files(settings_path)

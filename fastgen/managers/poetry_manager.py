@@ -20,11 +20,13 @@ class PoetryManager(Manager):
         migrations: bool,
         database: Database,
         docker: bool,
+        orm: bool,
     ) -> None:
         self.project_name = project_name
         self.migrations = migrations
         self.database = database
         self.docker = docker
+        self.orm = orm
 
     def nav_to_dir(self, dir_name: str) -> None:
         return super().nav_to_dir(dir_name)
@@ -49,7 +51,7 @@ class PoetryManager(Manager):
         if you try to run the program when you already have an activated venv
         """
         console.print("Spawning Virtual Environment ...", end="\r")
-        os.system("poetry env use python")
+        os.system("poetry env use python -q")
         console.print("Spawning Virtual Environment ... [green bold]SUCCESS[/]")
 
     def create_files(self):
@@ -66,7 +68,7 @@ class PoetryManager(Manager):
         # create database stuff
         database_path = self.inner_project_path / "database"
         os.makedirs(database_path)
-        self.generate_db_related_files(database_path=database_path)
+        self.generate_db_related_files(database_path=database_path, orm=self.orm)
 
         # create .env file
         self.generate_env_file(project_path=self.project_path)
@@ -86,8 +88,8 @@ class PoetryManager(Manager):
     def generate_main_files(self, api_path: Path):
         return super().generate_main_files(api_path)
 
-    def generate_db_related_files(self, database_path: Path):
-        return super().generate_db_related_files(database_path)
+    def generate_db_related_files(self, database_path: Path, orm: bool):
+        return super().generate_db_related_files(database_path, orm)
 
     def generate_settings_related_files(self, settings_path: Path):
         return super().generate_settings_related_files(settings_path)

@@ -51,7 +51,7 @@ class Manager(ABC):
             ...
 
     @abstractmethod
-    def generate_db_related_files(self, database_path: Path):
+    def generate_db_related_files(self, database_path: Path, orm: bool):
         """
         creates database.py file + db.sqlite file when `--database` is set to sqlite3
         """
@@ -59,9 +59,9 @@ class Manager(ABC):
             ...
         with open(database_path / "database.py", "x") as f:
             ...
-        # * will be added when orms are supported
-        # with open(databse_path / "models.py", "x") as f:
-        #     ...
+        if orm:
+            with open(database_path / "models.py", "x") as f:
+                ...
         if self.database.value == "sqlite3":
             with open(database_path / "db.sqlite", "x") as f:
                 ...
