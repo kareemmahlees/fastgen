@@ -66,6 +66,7 @@ $ fastgen new [OPTIONS] ⭐ Project Name
 - `--docker / --no-docker`: [default: False]
 - `--testing / --no-testing`: [default: False]
 - `--database 📅 Database`: [default: postgresql] ( Options are postgresql,mysql,sqlite )
+- `--orm ⚙️ ORM`: [default: False]
 - `--help`: Show this message and exit.
 
 ## 🪲 **Encountered A Problem !**
