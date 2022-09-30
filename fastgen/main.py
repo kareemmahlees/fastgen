@@ -2,7 +2,7 @@ from typing import Optional
 import typer
 from rich.console import Console
 from pathlib import Path
-from .managers import pip_manager
+from .managers import pip_manager, poetry_manager
 from .options import PackageManager, Database
 
 app = typer.Typer(
@@ -28,7 +28,7 @@ def new(
     package_manager: PackageManager = typer.Option(
         default=PackageManager.pip.value,
         metavar="📦 Package Manager",
-        help="Choices are pip , poetry (comming soon)",
+        help="Choices are pip , poetry ",
     ),
     migrations: bool = typer.Option(default=False, metavar="🚀 Alembic Migrations"),
     docker: bool = typer.Option(default=False, metavar="🐋 Docker"),
@@ -52,8 +52,15 @@ def new(
         pipmanager.create_project()
         pipmanager.init_env()
     elif package_manager == PackageManager.poetry:
-        # * Comming Soon
-        ...
+        poetrymanager = poetry_manager.PoetryManager(
+            project_name=project_name,
+            migrations=migrations,
+            database=database,
+            docker=docker,
+        )
+        if dir is not None:
+            poetrymanager.nav_to_dir(dir)
+        poetrymanager.create_poetry_project()
 
 
 @app.command()
