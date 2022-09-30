@@ -38,6 +38,7 @@ def new(
         metavar="📅 Database",
         help="Choices are sqlite3,postgresql,mysql",
     ),
+    orm: bool = typer.Option(default=False, metavar="⚙️ ORM"),
 ):
     if package_manager == PackageManager.pip:
         pipmanager = pip_manager.PipManager(
@@ -46,6 +47,7 @@ def new(
             testing=testing,
             database=database,
             docker=docker,
+            orm=orm,
         )
         if dir is not None:
             pipmanager.nav_to_dir(dir)
@@ -57,6 +59,7 @@ def new(
             migrations=migrations,
             database=database,
             docker=docker,
+            orm=orm,
         )
         if dir is not None:
             poetrymanager.nav_to_dir(dir)
