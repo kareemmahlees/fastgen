@@ -1,0 +1,6 @@
+class PathNotFoundError(Exception):
+    ...
+
+
+class FolderNotFoundError(Exception):
+    ...
