@@ -8,7 +8,7 @@ FastGen
 
 <p align="center" class="slogan"> <em>A CLI for your next FastAPI Project</em></p>
 
-<style>
+<!-- <style>
     .slogan{
         margin-top:-9px;
         padding-bottom:15px;
@@ -22,7 +22,7 @@ FastGen
       font-size:20px;
       font-weight:bold
     }
-</style>
+</style> -->
 
 ---
 
