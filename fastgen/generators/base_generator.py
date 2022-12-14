@@ -1,6 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 from pathlib import Path
+from typing import Optional
 
 from ..constants import path_constants
 from ..enums.generator_enums import Components
@@ -13,7 +14,7 @@ class AbstractGenerator(ABC):
     A base generator for all generator classes
     """
 
-    def __init__(self, component: Components, path: Path | None) -> None:
+    def __init__(self, component: Components, path: Optional[Path]) -> None:
         self.path = path
         if not path:
             self._check_builtin_path_exists(component)
