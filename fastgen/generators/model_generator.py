@@ -1,5 +1,6 @@
 import textwrap
 from pathlib import Path
+from typing import Optional
 
 from ..constants import path_constants
 from ..enums import generator_enums
@@ -14,7 +15,7 @@ class ModelGenerator(AbstractGenerator):
     def __init__(
         self,
         component: generator_enums.Components,
-        path: Path | None,
+        path: Optional[Path],
         model_type: generator_enums.ModelType,
     ) -> None:
         super().__init__(component, path)
