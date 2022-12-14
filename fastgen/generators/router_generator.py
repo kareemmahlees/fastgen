@@ -1,5 +1,6 @@
 import textwrap
 from pathlib import Path
+from typing import Optional
 
 from ..constants import path_constants
 from ..enums import generator_enums
@@ -12,7 +13,7 @@ class RouterGenerator(AbstractGenerator):
     """
 
     def __init__(
-        self, component: generator_enums.Components, path: Path | None
+        self, component: generator_enums.Components, path: Optional[Path]
     ) -> None:
         super().__init__(component, path)
 
