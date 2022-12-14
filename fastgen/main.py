@@ -1,19 +1,26 @@
+from pathlib import Path
 from typing import Optional
+
 import typer
 from rich.console import Console
-from pathlib import Path
-from .managers import pip_manager, poetry_manager
-from .options import PackageManager, Database
+
+from .apps.generator_app import generator_app
+from .enums.generator_enums import Components
+from .enums.manager_enums import Database
+from .enums.manager_enums import PackageManager
+from .managers import pip_manager
+from .managers import poetry_manager
 
 app = typer.Typer(
-    help="Start FastAPI Projects in Lightning Speed",
-    # pretty_exceptions_enable=True,
-    # pretty_exceptions_show_locals=False,
+    help="A CLI for your next FastAPI project", pretty_exceptions_show_locals=False
 )
+
+app.add_typer(generator_app, name="g")
+
 console = Console()
 
 
-@app.command()
+@app.command(help="Scaffold new project")
 def new(
     project_name: str = typer.Argument(
         default=...,
@@ -21,7 +28,7 @@ def new(
     ),
     dir: Optional[Path] = typer.Option(
         default=None,
-        show_default="Current Working Directory",
+        show_default="Current Working Directory",  # type: ignore
         metavar="📁 Directory Path",
         help="Where You Want To Start The Project",
     ),
@@ -29,16 +36,21 @@ def new(
         default=PackageManager.pip.value,
         metavar="📦 Package Manager",
         help="Choices are pip , poetry ",
+        show_choices=True,
     ),
     migrations: bool = typer.Option(default=False, metavar="🚀 Alembic Migrations"),
     docker: bool = typer.Option(default=False, metavar="🐋 Docker"),
-    testing: bool = typer.Option(default=False, metavar="💉 Tests"),
+    testing: bool = typer.Option(default=True, metavar="💉 Tests"),
     database: Database = typer.Option(
         default=Database.postgresql.value,
         metavar="📅 Database",
         help="Choices are sqlite3,postgresql,mysql",
+        show_choices=True,
     ),
     orm: bool = typer.Option(default=False, metavar="⚙️ ORM"),
+    skip_install: bool = typer.Option(
+        default=False, help="Skip installation process"
+    ),  # todo needs some work
 ):
     if package_manager == PackageManager.pip:
         pipmanager = pip_manager.PipManager(
@@ -48,11 +60,12 @@ def new(
             database=database,
             docker=docker,
             orm=orm,
+            skip_install=skip_install,
         )
         if dir is not None:
             pipmanager.nav_to_dir(dir)
-        pipmanager.create_project()
         pipmanager.init_env()
+        pipmanager.create_project()
     elif package_manager == PackageManager.poetry:
         poetrymanager = poetry_manager.PoetryManager(
             project_name=project_name,
@@ -60,17 +73,18 @@ def new(
             database=database,
             docker=docker,
             orm=orm,
+            skip_install=skip_install,
         )
         if dir is not None:
             poetrymanager.nav_to_dir(dir)
         poetrymanager.create_poetry_project()
 
 
-@app.command()
+@app.command(help="Show FastGen info")
 def info():
     console.print(
         """
-    ⚡[yellow bold]FastGen[/], Start FastAPI Projects In Lightning Speed
+    ⚡[yellow bold]FastGen[/], A CLI for your next FastAPI project
     built with [bold]typer[/], to help with [green bold]FastAPI[/]
 
     Developed By Kareem Ebrahim (2022)

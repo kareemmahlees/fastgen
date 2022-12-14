@@ -1,13 +1,35 @@
-from abc import ABC, abstractmethod
-from pathlib import Path
 import os
 import textwrap
-from .. import constants
+from abc import ABC
+from abc import abstractmethod
+from pathlib import Path
+
+from ..blocks import docker_blocks
+from ..blocks import env_blocks
+from ..blocks import main_blocks
+from ..blocks import pydantic_blocks
+from ..enums.manager_enums import Database
 
 
-class Manager(ABC):
+class AbstractManager(ABC):
+    def __init__(
+        self,
+        project_name: str,
+        migrations: bool,
+        database: Database,
+        docker: bool,
+        orm: bool,
+        skip_install: bool,
+    ) -> None:
+        self.project_name = project_name
+        self.migrations = migrations
+        self.database = database
+        self.docker = docker
+        self.orm = orm
+        self.skip_install = skip_install
+
     @abstractmethod
-    def nav_to_dir(self, dir_name: str) -> None:
+    def nav_to_dir(self, dir_name: Path) -> None:
         """
         executed when user defines a `--dir` value
         ### Raises:
@@ -32,20 +54,21 @@ class Manager(ABC):
         with open(api_path / "__init__.py", "x") as f:
             ...
         with open(api_path / "main.py", "x") as f:
-            f.write(textwrap.dedent(constants.MAIN_APP(project_name=self.project_name)))
+            f.write(
+                textwrap.dedent(main_blocks.MAIN_APP(project_name=self.project_name))
+            )
 
         with open(api_path / "deps.py", "x") as f:
             ...
-        with open(api_path / "utils.py", "x") as f:
+
+        os.mkdir(api_path / "utils")
+        with open(api_path / "utils" / "__init__.py", "x") as f:
             ...
-        with open(api_path / "schemas.py", "x") as f:
-            f.write(
-                textwrap.dedent(
-                    """
-                from pydantic import BaseModel
-                """
-                )
-            )
+
+        os.mkdir(api_path / "schemas")
+        with open(api_path / "schemas" / "__init__.py", "x") as f:
+            ...
+
         os.mkdir(api_path / "routers")
         with open(api_path / "routers" / "__init__.py", "x") as f:
             ...
@@ -60,7 +83,8 @@ class Manager(ABC):
         with open(database_path / "database.py", "x") as f:
             ...
         if orm:
-            with open(database_path / "models.py", "x") as f:
+            os.mkdir(database_path / "models.py")
+            with open(database_path / "models.py" / "__init__.py", "x") as f:
                 ...
         if self.database.value == "sqlite3":
             with open(database_path / "db.sqlite", "x") as f:
@@ -74,23 +98,23 @@ class Manager(ABC):
         with open(settings_path / "__init__.py", "x", encoding="utf-8") as f:
             ...
         with open(settings_path / "config.py", "x", encoding="utf-8") as f:
-            settings = constants.SETTINGS
+            settings = pydantic_blocks.JWT_SETTINGS
             if self.database.value == "postgresql":
-                settings += constants.POSTGRES_SETTINGS
+                settings += pydantic_blocks.POSTGRES_SETTINGS
             elif self.database.value == "mysql":
-                settings += constants.MYSQL_SETTINGS
-            f.write(constants.PYDANTIC_MAIN_SETTINGS(settings))
+                settings += pydantic_blocks.MYSQL_SETTINGS
+            f.write(pydantic_blocks.PYDANTIC_MAIN_SETTINGS(settings))
 
     @abstractmethod
     def generate_env_file(self, project_path: Path):
         """
         generate env file which contains all environment variables
         """
-        jwt_env_variables = constants.JWT_ENV_VARIABLES
+        jwt_env_variables = env_blocks.JWT_ENV_VARIABLES
         if self.database.value == "postgresql":
-            jwt_env_variables += constants.POSTGRES_ENV_VARIABLES
+            jwt_env_variables += env_blocks.POSTGRES_ENV_VARIABLES
         elif self.database.value == "mysql":
-            jwt_env_variables += constants.MYSQL_ENV_VARIABLES
+            jwt_env_variables += env_blocks.MYSQL_ENV_VARIABLES
         with open(project_path / ".env", "x", encoding="utf-8") as f:
             f.write(textwrap.dedent(jwt_env_variables))
 
@@ -100,15 +124,15 @@ class Manager(ABC):
         generate Dockerfile and docker-compose file with respect to the database of choice
         """
         with open(project_path / "Dockerfile", "x", encoding="utf-8") as f:
-            f.write(textwrap.dedent(constants.DOCKERFILE))
+            f.write(textwrap.dedent(docker_blocks.DOCKERFILE))
         if self.database.value != "sqlite3":
             with open(project_path / "docker-compose.yml", "x", encoding="utf-8") as f:
                 if self.database.value == "postgresql":
-                    docker_compose_base = constants.DOCKER_COMPOSE_BASE("postgres")
-                    docker_compose_base += constants.POSTGRES_DOCKER_COMPOSE
+                    docker_compose_base = docker_blocks.DOCKER_COMPOSE_BASE("postgres")
+                    docker_compose_base += docker_blocks.POSTGRES_DOCKER_COMPOSE
                     f.write(textwrap.dedent(docker_compose_base))
 
                 elif self.database.value == "mysql":
-                    docker_compose_base = constants.DOCKER_COMPOSE_BASE("mysql")
-                    docker_compose_base += constants.MYSQL_DOCKER_COMPOSE
+                    docker_compose_base = docker_blocks.DOCKER_COMPOSE_BASE("mysql")
+                    docker_compose_base += docker_blocks.MYSQL_DOCKER_COMPOSE
                     f.write(textwrap.dedent(docker_compose_base))

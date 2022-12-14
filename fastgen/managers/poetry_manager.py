@@ -1,14 +1,18 @@
-from pathlib import Path
 import os
-from rich.console import Console
-from ..options import Database
-from .base_manager import Manager
+from pathlib import Path
 
+from rich.console import Console
+from rich.progress import Progress
+from rich.progress import SpinnerColumn
+from rich.progress import TextColumn
+
+from ..enums import manager_enums
+from .base_manager import AbstractManager
 
 console = Console()
 
 
-class PoetryManager(Manager):
+class PoetryManager(AbstractManager):
     """
     class to handle poetry related operations such as creating a poetry env
     creating a poetry project ...
@@ -18,17 +22,14 @@ class PoetryManager(Manager):
         self,
         project_name: str,
         migrations: bool,
-        database: Database,
+        database: manager_enums.Database,
         docker: bool,
         orm: bool,
+        skip_install: bool,
     ) -> None:
-        self.project_name = project_name
-        self.migrations = migrations
-        self.database = database
-        self.docker = docker
-        self.orm = orm
+        super().__init__(project_name, migrations, database, docker, orm, skip_install)
 
-    def nav_to_dir(self, dir_name: str) -> None:
+    def nav_to_dir(self, dir_name: Path) -> None:
         return super().nav_to_dir(dir_name)
 
     def create_poetry_project(self):
@@ -38,9 +39,15 @@ class PoetryManager(Manager):
         # project_path
         # |__inner_project_path
         # |__ ...
-        console.print("Creating Poetry Project ...", end="\r")
-        os.system(f"poetry new {self.project_path} -q")
-        console.print("Creating Poetry Project ... [green bold]SUCCESS[/]")
+
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=True,
+        ) as progress:
+            progress.add_task(description="Creating Poetry Project ...", total=1)
+            os.system(f"poetry new {self.project_path} -q")
+        console.print("[green bold]SUCCESS[/]: Create Poetry Project ...")
         self.init_env()
         self.create_files()
 
@@ -50,9 +57,15 @@ class PoetryManager(Manager):
         which what happens if we use `poetry shell` which may run into some conflicts
         if you try to run the program when you already have an activated venv
         """
-        console.print("Spawning Virtual Environment ...", end="\r")
-        os.system("poetry env use python -q")
-        console.print("Spawning Virtual Environment ... [green bold]SUCCESS[/]")
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=True,
+        ) as progress:
+            progress.add_task(description="Spawning Virtual Environment ...", total=1)
+            os.system("poetry env use python -q")
+            os.system(f"poetry add fastapi python-dotenv")
+        console.print("[green bold]SUCCESS[/]: Spawn Virtual Environment ...")
 
     def create_files(self):
         # create api stuff

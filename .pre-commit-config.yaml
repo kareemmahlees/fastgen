@@ -1,7 +1,7 @@
-# - repo: https://github.com/pre-commit/mirrors-mypy
-#   rev: "v0.991"
-#   hooks:
-#     - id: mypy
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: "v0.991"
+  hooks:
+    - id: mypy
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0
@@ -50,11 +50,11 @@
   hooks:
     - id: black
       args: [--safe]
-# - repo: local
-#   hooks:
-#     - id: pytest-check
-#       name: pytest-check
-#       entry: pytest
-#       language: system
-#       pass_filenames: false
-#       always_run: true
+- repo: local
+  hooks:
+    - id: pytest-check
+      name: pytest-check
+      entry: pytest
+      language: system
+      pass_filenames: false
+      always_run: true
