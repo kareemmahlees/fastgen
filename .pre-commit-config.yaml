@@ -50,7 +50,6 @@
   hooks:
     - id: black
       args: [--safe]
-
 - repo: local
   hooks:
     - id: pytest-check
