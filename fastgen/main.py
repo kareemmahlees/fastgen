@@ -12,8 +12,7 @@ from .managers import pip_manager
 from .managers import poetry_manager
 
 app = typer.Typer(
-    help="A CLI for your next FastAPI project",
-    pretty_exceptions_show_locals=False,
+    help="A CLI for your next FastAPI project", pretty_exceptions_show_locals=False
 )
 
 app.add_typer(generator_app, name="g")

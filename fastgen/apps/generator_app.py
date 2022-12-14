@@ -8,9 +8,7 @@ from ..generators import model_generator
 from ..generators import router_generator
 from ..generators import schema_generator
 
-generator_app = typer.Typer(
-    help="Generate new component", pretty_exceptions_show_locals=False
-)
+generator_app = typer.Typer(help="Generate new component")
 
 
 @generator_app.command(

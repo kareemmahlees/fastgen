@@ -28,7 +28,7 @@ FastGen
 
 <!-- # ⚡ _**FastGen**_
 
-Start FastAPI Projects in Lightning Speed
+Start FastAPI Projects in Lightning Speed.
 
 Built With **Typer** To Help With <span style="color:green">**FastAPI**</span>. -->
 
