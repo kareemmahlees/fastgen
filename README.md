@@ -30,7 +30,7 @@ FastGen
 
 Start FastAPI Projects in Lightning Speed.
 
-Built With **Typer** To Help With <span style="color:green">**FastAPI**</span>... -->
+Built With **Typer** To Help With <span style="color:green">**FastAPI**</span>.... -->
 
 ## 👀 **Take A Look**
 
