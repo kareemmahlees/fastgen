@@ -125,7 +125,7 @@ $ fastgen g [OPTIONS] <component> <component_name>
 ```
 
 **Available Components**
-| Component | In stock |
+| Component | Action |
 |--------------|------------|
 | router | generates new rotuer at app/api/routers |
 | model | generates new sqlmodel or sqlalchemy mode at app/database/models |
