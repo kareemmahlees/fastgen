@@ -20,7 +20,7 @@ app.add_typer(generator_app, name="g")
 console = Console()
 
 
-@app.command(help="Scaffold new project")
+@app.command(help="Scaffold ew project")
 def new(
     project_name: str = typer.Argument(
         default=...,
@@ -52,6 +52,25 @@ def new(
         default=False, help="Skip installation process"
     ),  # todo needs some work
 ):
+    console.print(
+        """[yellow bold]
+      \t\t\t        /|
+      \t\t\t       / |
+      \t\t\t      /  |
+      \t\t\t     /   |
+      \t\t\t    /    |
+      \t\t\t   /     |
+      \t\t\t  /      |________
+      \t\t\t /_______        /
+      \t\t\t         |      /
+      \t\t\t         |     /
+      \t\t\t         |    /
+      \t\t\t         |   /
+      \t\t\t         |  /
+      \t\t\t         | /
+      \t\t\t         |/
+      \t\t\t            [/]"""
+    )
     if package_manager == PackageManager.pip:
         pipmanager = pip_manager.PipManager(
             project_name=project_name,
