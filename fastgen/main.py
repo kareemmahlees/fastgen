@@ -52,6 +52,25 @@ def new(
         default=False, help="Skip installation process"
     ),  # todo needs some work
 ):
+    console.print(
+        """[yellow bold]
+      \t\t\t        /|
+      \t\t\t       / |
+      \t\t\t      /  |
+      \t\t\t     /   |
+      \t\t\t    /    |
+      \t\t\t   /     |
+      \t\t\t  /      |________
+      \t\t\t /_______        /
+      \t\t\t         |      /
+      \t\t\t         |     /
+      \t\t\t         |    /
+      \t\t\t         |   /
+      \t\t\t         |  /
+      \t\t\t         | /
+      \t\t\t         |/
+      \t\t\t            [/]"""
+    )
     if package_manager == PackageManager.pip:
         pipmanager = pip_manager.PipManager(
             project_name=project_name,
